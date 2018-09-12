@@ -1,4 +1,4 @@
 # Blackjack
-Blackjack Online &amp; Offline Mode
+Blackjack Singleplayer Mode Only
 
-Coming Soon!
+This one will be handed in to school
