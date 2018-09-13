@@ -1,12 +1,8 @@
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+
+
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -40,10 +36,41 @@ public class Game extends JPanel
     private Image background3;
     private Image background4;
     
+    private JButton buttonReset;
+    private JButton buttonAllIn;
+    private JButton buttonDeal;
+    private JButton button25;
+    private JButton button100;
+    private JButton button500;
+    private JButton button1000;
+    private Image iReset;
+    private Image iAllIn;
+    private Image iDeal;
+    private Image chip25;
+    private Image chip100;
+    private Image chip500;
+    private Image chip5000;
+    private Image chipBar;
+    private JLabel lChipBar;
+    private JLabel bet;
+    
+    JPanel cardGame;
+    JPanel cardMenu;
+    JPanel cards;
     public Game()
     {   
         dealer.createCards();
         game();
+        cardMenu = new Menu(this);
+        cardGame = new Game();
+        
+        cards = new JPanel(new PageViewer());
+        cards.add(cardMenu, "MENU");
+        cards.add(cardGame, "GAME");
+        
+        getContentPane().add(cards);
+        
+        initComponents();
     }
     
     /**
@@ -82,8 +109,48 @@ public class Game extends JPanel
             }
         }
         );
+        
     }
-    
+    private void initComponents(){
+        buttonReset=new JButton();
+        buttonReset.setBounds(30,380,95,95);
+        ImageIcon iiReset = new ImageIcon("src/resources/button_Reset.png");
+        iReset= iiReset.getImage();
+        
+        buttonReset.setIcon(iiReset);
+        buttonReset.setVisible(true);
+        add(buttonReset);
+        
+        buttonAllIn=new JButton();
+        buttonAllIn.setBounds(140,420,95,95);
+        ImageIcon iiAllIn = new ImageIcon("src/resources/button_all_in.png");
+        iAllIn= iiAllIn.getImage();
+        buttonAllIn.setIcon(iiAllIn);
+        buttonAllIn.setVisible(true);
+        add(buttonAllIn);
+        
+        buttonDeal=new JButton();
+        buttonDeal.setBounds(250,380,95,95);
+        ImageIcon iiDeal = new ImageIcon("src/resources/button_deal.png");
+        iDeal= iiDeal.getImage();
+        buttonDeal.setIcon(iiDeal);
+        buttonDeal.setVisible(true);
+        add(buttonDeal);
+        
+        lChipBar= new JLabel();
+        lChipBar.setBounds(5,561,375,105);
+        ImageIcon iiChipBar = new ImageIcon("src/resources/chipBar.png");
+        chipBar= iiChipBar.getImage();
+        lChipBar.setIcon(iiChipBar);
+        add(lChipBar);
+        
+        button25= new JButton();
+        button25.setBounds(25,561,95,95);
+        ImageIcon iiChip25 = new ImageIcon("src/resources/chip25.png");
+        chipBar= iiChipBar.getImage();
+        lChipBar.setIcon(iiChipBar);
+        add(lChipBar);
+    }
     public void gameloop(int element)
     {
         removeAll();
