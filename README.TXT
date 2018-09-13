@@ -8,5 +8,5 @@ PROJECT TITLE: Blackjack
 PURPOSE OF PROJECT: School Project "Programm a Blackjack Game"
 VERSION or DATE: 31.8.2018 - 03.9.2018 Developing Time
 HOW TO START THIS PROJECT: Create a Main Object
-AUTHORS: Lucas "the_blaggy$" Tiedtke
+AUTHORS: the_blaggy$ 
 USER INSTRUCTIONS: You have to click through the game
