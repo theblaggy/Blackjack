@@ -52,6 +52,16 @@ public class Game extends JPanel
     private JLabel lChipBar;
     private JLabel bet;
     
+    private Image white;
+    private Image iDouble;
+    private Image iHit;
+    private Image iStand;
+    private JButton buttonHit;
+    private JButton buttonStand;
+    private JButton buttonDouble;
+    private JLabel box1;
+    private JLabel box2; 
+    private Image box;
     JPanel cardGame;
     JPanel cardMenu;
     JPanel cards;
@@ -70,7 +80,7 @@ public class Game extends JPanel
     private void game()
     {
         
-        ImageIcon iiBackground = new ImageIcon("src/resources/background4.png");
+        ImageIcon iiBackground = new ImageIcon("src/resources/background.png");
         background = iiBackground.getImage();
         
         int w = background.getWidth(this);
@@ -98,11 +108,11 @@ public class Game extends JPanel
         buttonReset.setBorderPainted(false);
         add(buttonReset);
         buttonReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-			    player.reset();
-			    gameloop(-1);
-			}
-		});
+            public void actionPerformed(ActionEvent evt) {
+                player.reset();
+                gameloop(-1);
+            }
+        });
         
         buttonAllIn=new JButton();
         buttonAllIn.setBounds(140,420,95,95);
@@ -115,11 +125,11 @@ public class Game extends JPanel
         buttonAllIn.setBorderPainted(false);
         add(buttonAllIn);
         buttonAllIn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-			    player.allIn();
-			    gameloop(-1);
-			}
-		});
+            public void actionPerformed(ActionEvent evt) {
+                player.allIn();
+                gameloop(-1);
+            }
+        });
         
         buttonDeal=new JButton();
         buttonDeal.setBounds(250,380,95,95);
@@ -132,18 +142,19 @@ public class Game extends JPanel
         buttonDeal.setBorderPainted(false);
         add(buttonDeal);
         buttonDeal.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-			    
-			    if (player.deal() == 0)
+            public void actionPerformed(ActionEvent evt) {
+                
+                if (player.deal() == 0)
                             {
                                 removeAll();
                                 dealer.deal();
                                 drawCards();
+                                initComponents2();
                                 state = 2;
                             }
-			    gameloop(-1);
-			}
-		});
+                gameloop(-1);
+            }
+        });
         
         button25= new JButton();
         button25.setBounds(10,558,95,95);
@@ -155,13 +166,13 @@ public class Game extends JPanel
         button25.setBorderPainted(false);
         add(button25);
         button25.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-			    player.bet(25);
-			    gameloop(-1);
-			}
-		});
-		
-	button100= new JButton();
+            public void actionPerformed(ActionEvent evt) {
+                player.bet(25);
+                gameloop(-1);
+            }
+        });
+        
+    button100= new JButton();
         button100.setBounds(97,560,95,95);
         ImageIcon iiChip100 = new ImageIcon("src/resources/chip100.png");
         chip100= iiChip100.getImage();
@@ -171,13 +182,13 @@ public class Game extends JPanel
         button100.setBorderPainted(false);
         add(button100);
         button100.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-			    player.bet(100);
-			    gameloop(-1);
-			}
-		});
-		
-	button500= new JButton();
+            public void actionPerformed(ActionEvent evt) {
+                player.bet(100);
+                gameloop(-1);
+            }
+        });
+        
+    button500= new JButton();
         button500.setBounds(181,559,95,95);
         ImageIcon iiChip500 = new ImageIcon("src/resources/chip500.png");
         chip500= iiChip500.getImage();
@@ -187,13 +198,13 @@ public class Game extends JPanel
         button500.setBorderPainted(false);
         add(button500);
         button500.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-			    player.bet(500);
-			    gameloop(-1);
-			}
-		});
-		
-	button1000= new JButton();
+            public void actionPerformed(ActionEvent evt) {
+                player.bet(500);
+                gameloop(-1);
+            }
+        });
+        
+    button1000= new JButton();
         button1000.setBounds(266,559,95,95);
         ImageIcon iiChip1000 = new ImageIcon("src/resources/chip1000.png");
         chip1000= iiChip1000.getImage();
@@ -203,11 +214,11 @@ public class Game extends JPanel
         button1000.setBorderPainted(false);
         add(button1000);
         button1000.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-			    player.bet(1000);
-			    gameloop(-1);
-			}
-		});
+            public void actionPerformed(ActionEvent evt) {
+                player.bet(1000);
+                gameloop(-1);
+            }
+        });
         
         lChipBar= new JLabel();
         lChipBar.setBounds(5,561,375,105);
@@ -217,6 +228,62 @@ public class Game extends JPanel
         add(lChipBar);
         
         
+    }
+    public void initComponents2(){
+        buttonHit= new JButton();
+        buttonHit.setBounds(60,495,95,95);
+        ImageIcon iiHit = new ImageIcon("src/resources/buttonHit.png");
+        iHit= iiHit.getImage();
+        buttonHit.setIcon(iiHit);
+        buttonHit.setOpaque(false);
+        buttonHit.setContentAreaFilled(false);
+        buttonHit.setBorderPainted(false);
+        add(buttonHit);
+        buttonHit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                player.hit();
+            }
+        });
+        
+        buttonStand= new JButton();
+        buttonStand.setBounds(190,565,95,95);
+        ImageIcon iiStand = new ImageIcon("src/resources/buttonStand.png");
+        iStand= iiStand.getImage();
+        buttonStand.setIcon(iiStand);
+        buttonStand.setOpaque(false);
+        buttonStand.setContentAreaFilled(false);
+        buttonStand.setBorderPainted(false);
+        add(buttonStand);
+        buttonStand.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                player.stand();
+            }
+        });
+        
+        buttonDouble= new JButton();
+        buttonDouble.setBounds(315,495,95,95);
+        ImageIcon iiDouble = new ImageIcon("src/resources/buttonDouble.png");
+        iDouble= iiDouble.getImage();
+        buttonDouble.setIcon(iiDouble);
+        buttonDouble.setOpaque(false);
+        buttonDouble.setContentAreaFilled(false);
+        buttonDouble.setBorderPainted(false);
+        add(buttonDouble);
+        buttonDouble.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                //player.double();
+            }
+        });
+        
+        box1= new JLabel();
+        box1.setLocation(170,60);
+        ImageIcon iibox = new ImageIcon("src/resources/box.png");
+        box= iibox.getImage();
+        box1.setIcon(iibox);
+        
+        box2= new JLabel();
+        box2.setLocation(170,315);
+        box2.setIcon(iibox);
     }
     public void gameloop(int element)
     {
