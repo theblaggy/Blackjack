@@ -1,14 +1,20 @@
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
 
 /**
  * Write a description of class Card here.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Lucas & Filip
+ * @version 18.09.
  */
-public class Card
+public class Card 
 {
-    private int suite;
+    private int suite; 
     private int rank;
     private ImageIcon icon;
     private boolean flag_lower = false;
@@ -17,7 +23,7 @@ public class Card
     {
         suite = pSuite;
         rank = pRank;
-        icon = new ImageIcon("src/resources/Playing_card_" + getSuite() + "_" + getRank() + ".png");
+        icon = new ImageIcon(new ImageIcon("src/resources/Playing_card_" + getSuite() + "_" + getRank() + ".png").getImage().getScaledInstance(120, 180, Image.SCALE_SMOOTH));
     }
     
     public String getSuite()
