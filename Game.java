@@ -93,6 +93,9 @@ public class Game extends JPanel
         JButton buttonReset;
         JButton buttonAllIn;
         JButton buttonDeal;
+        JLabel reset;
+        JLabel allIn;
+        JLabel deal;
         JButton button1;
         JButton button2;
         JButton button3;
@@ -100,24 +103,32 @@ public class Game extends JPanel
         JLabel lChipBar;
         JLabel bet;
 
-        buttonReset=buttonCreator(30, 430, "button_Reset.png", true);
-        buttonReset.setBounds(30, 430, 95, 95);
+        buttonReset=buttonCreator(30, 380, "button_Reset.png", true);
+        buttonReset.setBorderPainted(false);
         buttonReset.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     player.reset();
                     gameloop(-1);
                 }
             });
-
-        buttonAllIn=buttonCreator(140,470, "button_all_in.png", true);
+        reset= new JLabel("Reset");
+        reset.setBounds(52,450, 100, 30);
+        reset.setForeground(new Color(255,255,255));
+        add(reset);
+            
+        buttonAllIn=buttonCreator(145,440, "button_all_in.png", true);
         buttonAllIn.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     player.allIn();
                     gameloop(-1);
                 }
             });
-
-        buttonDeal=buttonCreator(250,430,"button_deal.png", true);
+        /*allIn= new JLabel("All In");
+        allIn.setBounds(167,515, 100, 30);
+        allIn.setForeground(new Color(255,255,255));
+        add(allIn);*/
+        
+        buttonDeal=buttonCreator(265,375,"button_deal.png", true);
         buttonDeal.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
 
@@ -132,7 +143,11 @@ public class Game extends JPanel
                     gameloop(-1);
                 }
             });
-
+        /*deal= new JLabel("Deal");
+        deal.setBounds(287,450, 100, 30);
+        deal.setForeground(new Color(255,255,255));
+        add(deal);*/
+        
         int i=0;
         if(player.getChips()>=5000 && i<4){
             chipValue[i]=5000;
@@ -221,43 +236,52 @@ public class Game extends JPanel
         JButton buttonHit;
         JButton buttonStand;
         JButton buttonDouble;
-        JLabel box1;
-        JLabel box2; 
-        Image box;
+        JLabel hit;
+        JLabel stand;
+        JLabel doubble;
         JPanel cardGame;
         JPanel cardMenu;
         JPanel cards;
-
-        buttonHit=buttonCreator(35, 495, "button_hit.png", true);
+        JLabel littleChip;
+        
+        littleChip= new JLabel();
+        littleChip.setBounds(15,628,25,25);
+        littleChip.setIcon(new ImageIcon("src/resources/littleChip.png"));
+        add(littleChip);
+        
+        buttonHit=buttonCreator(15, 465, "button_hit.png", true);
         buttonHit.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     player.hit();
                 }
             });
+        hit= new JLabel("Hit");
+        hit.setBounds(45,540, 100, 30);
+        hit.setForeground(new Color(255,255,255));
+        add(hit);
 
-        buttonStand= buttonCreator(140,565,"button_stand.png", true);
+        buttonStand= buttonCreator(140,525,"button_stand.png", true);
         buttonStand.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     player.stand();
                 }
             });
+        stand= new JLabel("Stand");
+        stand.setBounds(160,600, 100, 30);
+        stand.setForeground(new Color(255,255,255));
+        add(stand);
 
-        buttonDouble=buttonCreator(275,495,"button_double.png", true);
+        buttonDouble=buttonCreator(275,465,"button_double.png", true);
         buttonDouble.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     player.doubble();
                 }
             });
-
-        box1= new JLabel();
-        box1.setLocation(170,60);
-        ImageIcon iibox = new ImageIcon("src/resources/box.png");
-        box= iibox.getImage();
-        box1.setIcon(iibox);
-
-        box2= new JLabel();
-        box2.setLocation(170,315);
-        box2.setIcon(iibox);
+        doubble= new JLabel("Double");
+        doubble.setBounds(295,540, 100, 30);
+        doubble.setForeground(new Color(255,255,255));
+        add(doubble);
+            
     }
 
     public void gameloop(int element)
@@ -422,7 +446,7 @@ public class Game extends JPanel
                     icon.setBounds(x, y, 120, 180);
                 }
             }
-        }
+        } 
     }
 
     public void drawChips()
@@ -481,6 +505,7 @@ public class Game extends JPanel
     public void drawPlayersHandValue()
     {
         JLabel label = new JLabel(Integer.toString(player.getHandValue()));
+        label.setIcon(new ImageIcon("src/resources/box.png"));
         label.setFont(new Font("Calibri",Font.BOLD , 16));
         label.setForeground(Color.black);
         add(label);
@@ -490,12 +515,15 @@ public class Game extends JPanel
     public void drawDealersHandValue()
     {
         JLabel label;
-        if (player.getFinished()){label = new JLabel(Integer.toString(dealer.getHandValue()));}
-        else {label = new JLabel(Integer.toString(dealer.getFirstCardValue()));}
+        JLabel box1; 
+        label= new JLabel();
+        label.setIcon(new ImageIcon("src/resources/box.png"));
         label.setFont(new Font("Calibri",Font.BOLD , 18));
         label.setForeground(Color.black);
+        if (player.getFinished()){label = new JLabel(Integer.toString(dealer.getHandValue()));}
+        else {label.setText(Integer.toString(dealer.getFirstCardValue()));}
         add(label);
-        label.setBounds(158, 30, 50, 50);
+        label.setBounds(158, 30, 40, 30);
     }
 
     /**
