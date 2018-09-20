@@ -1,5 +1,8 @@
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> frehburg-patch-1
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -14,14 +17,20 @@ import javax.swing.JLabel;
  *  Calculates the game
  *  Manages mouse clicks
  *
+<<<<<<< HEAD
  * @author Lucas
  * @version 01.09.2018
+=======
+ * @author Lucas & Filip
+ * @version 18.09.2018
+>>>>>>> frehburg-patch-1
  */
 
 public class Game extends JPanel
 {    
     private Dealer dealer = new Dealer();
     private Player player = new Player(dealer);
+<<<<<<< HEAD
     
     //                              All In      Reset       Deal        5000        500         100         10
     private int[][] elements1 = {{185, 250}, {65, 385}, {305, 385}, {55, 610}, {140, 610}, {225, 610}, {310, 610}};
@@ -55,34 +64,68 @@ public class Game extends JPanel
     JPanel cardGame;
     JPanel cardMenu;
     JPanel cards;
+=======
+
+    int chipHeight=87;
+    int chipWidth=87;
+    int buttonHeight=78;
+    int buttonWidth=78;
+    private JLabel labelChips;
+    private JLabel labelBetCoin;
+    private JLabel labelBetText;
+
+    private int state = 1; // 1 = Bet; 2 = Players Turn; 3 = Win; 4 = Dealers Turn
+
+    private Image background;
+
+>>>>>>> frehburg-patch-1
     public Game()
     {   
         dealer.createCards();
         game();
+<<<<<<< HEAD
         
         
         initComponents();
     }
     
+=======
+
+        initComponents();
+    }
+
+>>>>>>> frehburg-patch-1
     /**
      * Implements a mouse handling method
      */
     private void game()
     {
+<<<<<<< HEAD
         
         ImageIcon iiBackground = new ImageIcon("src/resources/background4.png");
         background = iiBackground.getImage();
         
+=======
+
+        ImageIcon iiBackground = new ImageIcon("src/resources/background.png");
+        background = iiBackground.getImage();
+
+>>>>>>> frehburg-patch-1
         int w = background.getWidth(this);
         int h = background.getHeight(this);
         setPreferredSize(new Dimension(w, h));
         setLayout(null);
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> frehburg-patch-1
         drawChips();
         if (player.getBet() != 0)
         {
             drawBet();
         }
+<<<<<<< HEAD
         
         add(new Automation(this));
     }
@@ -222,6 +265,215 @@ public class Game extends JPanel
     {
         
              
+=======
+
+        add(new Automation(this));
+    }
+
+    private JButton buttonCreator(int x, int y, String src, boolean isButton){
+        int h;
+        int w;
+        if(isButton){
+            h=buttonHeight;
+            w=buttonWidth;
+        } else{
+            h=chipHeight;
+            w=chipWidth; 
+        }
+        JButton button=new JButton();
+        button.setBounds(x, y, w, h);
+        ImageIcon iicon = new ImageIcon(new ImageIcon("src/resources/" + src).getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH));
+        button.setIcon(iicon);
+        button.setVisible(true);
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        add(button);
+        return button;
+    }
+
+    private void initComponents(){
+        int chipValue[]=new int[4];
+        String chipIcon[]=new String[4];
+        JButton buttonReset;
+        JButton buttonAllIn;
+        JButton buttonDeal;
+        JButton button1;
+        JButton button2;
+        JButton button3;
+        JButton button4;
+        JLabel lChipBar;
+        JLabel bet;
+
+        buttonReset=buttonCreator(30, 430, "button_Reset.png", true);
+        buttonReset.setBounds(30, 430, 95, 95);
+        buttonReset.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    player.reset();
+                    gameloop(-1);
+                }
+            });
+
+        buttonAllIn=buttonCreator(140,470, "button_all_in.png", true);
+        buttonAllIn.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    player.allIn();
+                    gameloop(-1);
+                }
+            });
+
+        buttonDeal=buttonCreator(250,430,"button_deal.png", true);
+        buttonDeal.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+
+                    if (player.deal() == 0)
+                    {
+                        removeAll();
+                        dealer.deal();
+                        drawCards();
+                        initComponents2();
+                        state = 2;
+                    }
+                    gameloop(-1);
+                }
+            });
+
+        int i=0;
+        if(player.getChips()>=5000 && i<4){
+            chipValue[i]=5000;
+            chipIcon[i]= "chip5000.png";
+            i++;
+        }
+        if(player.getChips()>=1000 && i<4){
+            chipValue[i]=1000;
+            chipIcon[i]= "chip1000.png";
+            i++;
+        }
+        if(player.getChips()>=500 && i<4){
+            chipValue[i]=500;
+            chipIcon[i]= "chip500.png";
+            i++;
+        }
+        if(player.getChips()>=100 && i<4){
+            chipValue[i]=100;
+            chipIcon[i]= "chip100.png";
+            i++;
+        }
+        if(player.getChips()>=25 && i<4){
+            chipValue[i]=25;
+            chipIcon[i]= "chip25.png";
+            i++;
+        }
+        if(player.getChips()>=5 && i<4){
+            chipValue[i]=5;
+            chipIcon[i]= "chip5.png";
+            i++;
+        }
+        if(player.getChips()>=1 && i<4){
+            chipValue[i]=1;
+            chipIcon[i]= "chip1.png";
+            i++;
+        }
+        int chipX=17;
+        int xPadding=85;
+        int chipY=565;
+        button1=buttonCreator(chipX,chipY,chipIcon[0], false);
+        button1.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    player.bet(chipValue[0]);
+                    gameloop(-1);
+                }
+            });
+
+        button2=buttonCreator(chipX+xPadding-1,chipY,chipIcon[1], false);
+        button2.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    player.bet(chipValue[1]);
+                    gameloop(-1);
+                }
+            });
+
+        button3=buttonCreator(chipX+(2*xPadding),chipY,chipIcon[2], false);
+        button3.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    player.bet(chipValue[2]);
+                    gameloop(-1);
+                }
+            });
+
+        button4=buttonCreator(chipX+(3*xPadding),chipY,chipIcon[3], false);
+        button4.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    player.bet(chipValue[3]);
+                    gameloop(-1);
+                }
+            });
+
+        lChipBar= new JLabel();
+        lChipBar.setBounds(5,561,375,105);
+        ImageIcon iiChipBar = new ImageIcon("src/resources/chipBar.png");
+
+        lChipBar.setIcon(iiChipBar);
+        add(lChipBar);
+
+    }
+
+    public void initComponents2(){
+        Image white;
+        Image iDouble;
+        Image iHit;
+        Image iStand;
+        JButton buttonHit;
+        JButton buttonStand;
+        JButton buttonDouble;
+        JLabel box1;
+        JLabel box2; 
+        Image box;
+        JPanel cardGame;
+        JPanel cardMenu;
+        JPanel cards;
+
+        buttonHit=buttonCreator(35, 495, "button_hit.png", true);
+        buttonHit.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    player.hit();
+                }
+            });
+
+        buttonStand= buttonCreator(140,565,"button_stand.png", true);
+        buttonStand.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    player.stand();
+                }
+            });
+
+        buttonDouble=buttonCreator(275,495,"button_double.png", true);
+        buttonDouble.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    player.doubble();
+                }
+            });
+
+        box1= new JLabel();
+        box1.setLocation(170,60);
+        ImageIcon iibox = new ImageIcon("src/resources/box.png");
+        box= iibox.getImage();
+        box1.setIcon(iibox);
+
+        box2= new JLabel();
+        box2.setLocation(170,315);
+        box2.setIcon(iibox);
+    }
+
+    public void gameloop(int element)
+    {
+        try{//updated non-static Elements
+            remove(labelChips);
+            remove(labelBetCoin);
+            remove(labelBetText);
+        } catch(Exception e){//if a label hasn´t been added
+        }
+>>>>>>> frehburg-patch-1
         if (state == 3)
         {
             state = 1;
@@ -230,7 +482,11 @@ public class Game extends JPanel
         {
             if (state == 1)
             {
+<<<<<<< HEAD
                 
+=======
+
+>>>>>>> frehburg-patch-1
                 if (element == 2)
                 {
                     if (player.deal() == 0)
@@ -240,7 +496,11 @@ public class Game extends JPanel
                         state = 2;
                     }
                 }
+<<<<<<< HEAD
                 
+=======
+
+>>>>>>> frehburg-patch-1
             }
             else if (state == 2)
             {
@@ -277,7 +537,11 @@ public class Game extends JPanel
                 label.setForeground(Color.white);
                 add(label);
                 label.setBounds(300, 2, 150, 50);
+<<<<<<< HEAD
                 
+=======
+
+>>>>>>> frehburg-patch-1
                 if (player.getFinished())
                 {
                     state = 4;
@@ -292,7 +556,11 @@ public class Game extends JPanel
         {
             roundEnd();
         }
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> frehburg-patch-1
         // Draw UI
         drawChips();
         if (player.getBet() != 0)
@@ -307,7 +575,11 @@ public class Game extends JPanel
         }
         repaint();
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> frehburg-patch-1
     public void roundEnd()
     {
         if ((player.getHandValue() > dealer.getHandValue() && !player.getBusted()) || (!player.getBusted() && dealer.getBusted()))
@@ -324,13 +596,18 @@ public class Game extends JPanel
         {
             player.setChips(player.getBet());
             state = 1;
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> frehburg-patch-1
             JLabel label = new JLabel("PUSH");
             label.setFont(new Font("Calibri",Font.BOLD , 24));
             label.setForeground(Color.white);
             add(label);
             label.setBounds(300, 2, 150, 50);
         }
+<<<<<<< HEAD
         
         player.writeChips();
         
@@ -375,6 +652,15 @@ public class Game extends JPanel
         return -1;
     }
     
+=======
+
+        player.writeChips();
+
+        player.flushHand();
+        dealer.flushHand();
+    }
+
+>>>>>>> frehburg-patch-1
     public void drawCards()
     {
         for (int i = 0; i < 2; i++)
@@ -388,7 +674,11 @@ public class Game extends JPanel
             {
                 hand = dealer.getHand();
             }
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> frehburg-patch-1
             int c1 = 0;
             for (int j = hand.length-1; j >= 0; j--)
             {
@@ -397,7 +687,11 @@ public class Game extends JPanel
                     c1++;
                 }
             }
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> frehburg-patch-1
             int c2 = 0;
             for (int j = hand.length-1; j >= 0; j--)
             {
@@ -415,6 +709,7 @@ public class Game extends JPanel
             }
         }
     }
+<<<<<<< HEAD
     
     public void drawChips()
     {
@@ -432,6 +727,25 @@ public class Game extends JPanel
         }
     }
     
+=======
+
+    public void drawChips()
+    {
+        labelChips = new JLabel("$" + Integer.toString(player.getChips()));
+        labelChips.setFont(new Font("Calibri",Font.BOLD , 18));
+        labelChips.setForeground(Color.white);
+        add(labelChips);
+        if (state == 1)
+        {
+            labelChips.setBounds(45, 520, 250, 50);
+        }
+        if (state == 2 || state == 3 || state == 4)
+        {
+            labelChips.setBounds(40, 615, 250, 50);
+        }
+    }
+
+>>>>>>> frehburg-patch-1
     public void drawWin()
     {
         JLabel label = new JLabel("$" + Integer.toString(player.getBet()*2));
@@ -440,6 +754,7 @@ public class Game extends JPanel
         add(label);
         label.setBounds(130, 120, 250, 50);
     }
+<<<<<<< HEAD
     
     public void drawBet()
     {
@@ -468,6 +783,37 @@ public class Game extends JPanel
         }
     }
     
+=======
+
+    public void drawBet()
+    {
+        labelBetText = new JLabel("$" + Integer.toString(player.getBet()));
+        labelBetText.setFont(new Font("Calibri",Font.BOLD , 18));
+        labelBetText.setForeground(Color.white);
+        add(labelBetText);
+
+        ImageIcon iicon;
+        if (player.getBet() - 5000 >= 0){iicon =new ImageIcon("src/resources/chip5000.png");}
+        else if (player.getBet() - 500  >= 0){iicon = new ImageIcon("src/resources/chip500.png");}           
+        else if (player.getBet() - 100  >= 0){iicon = new ImageIcon("src/resources/chip100.png");}
+        else if (player.getBet() - 10   >= 0){iicon = new ImageIcon("src/resources/chip25.png");}
+        else {iicon = new ImageIcon("");}
+        labelBetCoin=new JLabel(iicon);
+        add(labelBetCoin);
+
+        if (state == 1)
+        {
+            labelBetText.setBounds(160, 425, 250, 50);
+            labelBetCoin.setBounds(148, 350, iicon.getIconWidth(), iicon.getIconHeight());
+        }
+        if (state == 2 || state == 4)
+        {
+            labelBetText.setBounds(20, 230, 250, 50);
+            labelBetCoin.setBounds(8, 152, 78, 78);
+        }
+    }
+
+>>>>>>> frehburg-patch-1
     public void drawPlayersHandValue()
     {
         JLabel label = new JLabel(Integer.toString(player.getHandValue()));
@@ -476,7 +822,11 @@ public class Game extends JPanel
         add(label);
         label.setBounds(158, 289, 50, 50);
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> frehburg-patch-1
     public void drawDealersHandValue()
     {
         JLabel label;
@@ -487,7 +837,11 @@ public class Game extends JPanel
         add(label);
         label.setBounds(158, 30, 50, 50);
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> frehburg-patch-1
     /**
      * Overwritten to draw the background pictures
      */
@@ -495,10 +849,16 @@ public class Game extends JPanel
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
+<<<<<<< HEAD
         
             g.drawImage(background, 0, 0, null);
         
         
+=======
+
+        g.drawImage(background, 0, 0, null);
+
+>>>>>>> frehburg-patch-1
         Toolkit.getDefaultToolkit().sync();
     }
 }

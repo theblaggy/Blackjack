@@ -1,14 +1,33 @@
+<<<<<<< HEAD
 import javax.swing.ImageIcon;
+=======
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+>>>>>>> frehburg-patch-1
 
 /**
  * Write a description of class Card here.
  *
+<<<<<<< HEAD
  * @author (your name)
  * @version (a version number or a date)
  */
 public class Card
 {
     private int suite;
+=======
+ * @author Lucas & Filip
+ * @version 18.09.
+ */
+public class Card 
+{
+    private int suite; 
+>>>>>>> frehburg-patch-1
     private int rank;
     private ImageIcon icon;
     private boolean flag_lower = false;
@@ -17,7 +36,11 @@ public class Card
     {
         suite = pSuite;
         rank = pRank;
+<<<<<<< HEAD
         icon = new ImageIcon("src/resources/Playing_card_" + getSuite() + "_" + getRank() + ".png");
+=======
+        icon = new ImageIcon(new ImageIcon("src/resources/Playing_card_" + getSuite() + "_" + getRank() + ".png").getImage().getScaledInstance(120, 180, Image.SCALE_SMOOTH));
+>>>>>>> frehburg-patch-1
     }
     
     public String getSuite()
