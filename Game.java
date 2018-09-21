@@ -159,7 +159,7 @@ public class Game extends JPanel
         }
         int firstChip = counter; // The variable that defines the first chip to use has to be (effectively) final to be referenced later from an inner class
         
-        int chipX=21;
+        int chipX=16;
         int chipY=565;
         int xPadding=85;
         
