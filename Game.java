@@ -77,6 +77,7 @@ public class Game extends JPanel
      */
     private void initComponents()
     {
+        // Removes all (static) components
         removeAll();
         
         // Creates the little icon next to the players chips label
@@ -92,7 +93,7 @@ public class Game extends JPanel
             public void actionPerformed(ActionEvent evt)
             {
                 player.reset();
-                gameloop(-1);
+                gamelogic(-1);
             }
         }
         );
@@ -110,7 +111,7 @@ public class Game extends JPanel
             public void actionPerformed(ActionEvent evt)
             {
                 player.allIn();
-                gameloop(-1);
+                gamelogic(-1);
             }
         }
         );
@@ -133,7 +134,7 @@ public class Game extends JPanel
                     initComponents2();
                     state = 2;
                 }
-                gameloop(-1);
+                gamelogic(-1);
             }
         }
         );
@@ -172,7 +173,7 @@ public class Game extends JPanel
                 public void actionPerformed(ActionEvent evt)
                 {
                     player.bet(chipValues[firstChip+offset]);
-                    gameloop(-1);
+                    gamelogic(-1);
                 }
             }
             );
@@ -180,92 +181,96 @@ public class Game extends JPanel
         
         // Creates a label for the chipbar
         JLabel labelChipBar= new JLabel(new ImageIcon("src/resources/chipBar.png"));
-        labelChipBar.setBounds(5,561,375,105);
+        labelChipBar.setBounds(0,561,375,105);
         add(labelChipBar);
     }
     
-    public void initComponents2(){
-        Image white;
-        Image iDouble;
-        Image iHit;
-        Image iStand;
-        JButton buttonHit;
-        JButton buttonStand;
-        JButton buttonDouble;
-        JLabel hit;
-        JLabel stand;
-        JLabel doubble;
-        JPanel cardGame;
-        JPanel cardMenu;
-        JPanel cards;
-        JLabel littleChip;
-
-        removeAll();
-
-        littleChip= new JLabel();
-        littleChip.setBounds(15,628,25,25);
-        littleChip.setIcon(new ImageIcon("src/resources/littleChip.png"));
-        add(littleChip);
-
-        buttonHit=buttonCreator(15, 465, "button_hit.png", true);
-        buttonHit.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    player.hit();
-                    gameloop(-1);
-                }
-            });
-        hit= new JLabel("Hit");
-        hit.setBounds(44,540, 100, 30);
-        hit.setForeground(new Color(255,255,255));
-        add(hit);
-
-        buttonStand= buttonCreator(140,525,"button_stand.png", true);
-        buttonStand.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    player.stand();
-                    gameloop(-1);
-                }
-            });
-        stand= new JLabel("Stand");
-        stand.setBounds(160,600, 100, 30);
-        stand.setForeground(new Color(255,255,255));
-        add(stand);
-
-        buttonDouble=buttonCreator(275,465,"button_double.png", true);
-        buttonDouble.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    player.doubble();
-                    gameloop(-1);
-                }
-            });
-        doubble= new JLabel("Double");
-        doubble.setBounds(292,540, 100, 30);
-        doubble.setForeground(new Color(255,255,255));
-        add(doubble);
-
-    }
-
-    public void gameloop(int element)
+    public void initComponents2()
     {
-        try
+        // Removes all (static) components
+        removeAll();
+        
+        // Creates a text label for the chip icon
+        JLabel labelLittleChip= new JLabel();
+        labelLittleChip.setBounds(15,628,25,25);
+        labelLittleChip.setIcon(new ImageIcon("src/resources/littleChip.png"));
+        add(labelLittleChip);
+        
+        // Creates the hit button
+        JButton buttonHit=buttonCreator(15, 465, "button_hit.png", true);
+        buttonHit.addActionListener(new ActionListener()
         {
-            //removes dynamic elements to update
-            if (labelChips != null)         remove(labelChips);
-            if (labelBetCoin != null)       remove(labelBetCoin);
-            if (labelBetText != null)       remove(labelBetText);
-            if (labelHandValue != null)     remove(labelHandValue);
-            if (labelDealersValue != null)  remove(labelDealersValue);
-            if (box1 != null)               remove(box1);
-            if (box2 != null)               remove(box2);
-            
-            for (int i = 0; i < labelCards.length; i++)
+            public void actionPerformed(ActionEvent evt)
             {
-                if (labelCards[i] != null) remove(labelCards[i]);
+                player.hit();
+                gamelogic(-1);
             }
         }
-        catch(Exception e)
+        );
+        
+        // Creates a text label for hit button
+        JLabel labelHit= new JLabel("Hit");
+        labelHit.setBounds(44,540, 100, 30);
+        labelHit.setForeground(new Color(255,255,255));
+        add(labelHit);
+        
+        // Creates the stand button
+        JButton buttonStand= buttonCreator(140,525,"button_stand.png", true);
+        buttonStand.addActionListener(new ActionListener()
         {
-            //if a label hasn´t been added
+            public void actionPerformed(ActionEvent evt)
+            {
+                player.stand();
+                gamelogic(-1);
+            }
+        }
+        );
+        
+        // Creates a text label for stand button
+        JLabel labelStand= new JLabel("Stand");
+        labelStand.setBounds(160,600, 100, 30);
+        labelStand.setForeground(new Color(255,255,255));
+        add(labelStand);
+        
+        // Creates the double button
+        JButton buttonDouble=buttonCreator(275,465,"button_double.png", true);
+        buttonDouble.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent evt)
+            {
+                player.doubble();
+                gamelogic(-1);
+            }
+        }
+        );
+        
+        // Creates a text label for double button
+        JLabel labelDoubble= new JLabel("Double");
+        labelDoubble.setBounds(292,540, 100, 30);
+        labelDoubble.setForeground(new Color(255,255,255));
+        add(labelDoubble);
+    }
+    
+    /**
+     * Calculates what has to be drawn
+     */
+    public void gamelogic(int element)
+    {
+        // Removes dynamic elements to update them later
+        if (labelChips != null)         remove(labelChips);
+        if (labelBetCoin != null)       remove(labelBetCoin);
+        if (labelBetText != null)       remove(labelBetText);
+        if (labelHandValue != null)     remove(labelHandValue);
+        if (labelDealersValue != null)  remove(labelDealersValue);
+        if (box1 != null)               remove(box1);
+        if (box2 != null)               remove(box2);
+        
+        for (int i = 0; i < labelCards.length; i++)
+        {
+            if (labelCards[i] != null)
+            {
+                remove(labelCards[i]);
+            }
         }
         
         if (state == 3)
@@ -277,7 +282,6 @@ public class Game extends JPanel
         {
             if (state == 1)
             {
-                
                 if (element == 2)
                 {
                     if (player.deal() == 0)
@@ -287,7 +291,6 @@ public class Game extends JPanel
                         state = 2;
                     }
                 }
-                
             }
             else if (state == 2)
             {
@@ -355,6 +358,9 @@ public class Game extends JPanel
         repaint();
     }
     
+    /**
+     * Calculates who has won and flushes hands
+     */
     public void roundEnd()
     {
         boolean win = false;
@@ -389,10 +395,13 @@ public class Game extends JPanel
         if (!win)
         {
             initComponents();
-            gameloop(-1);
+            gamelogic(-1);
         }
     }
     
+    /**
+     * Draws the hand cards of player and dealer
+     */
     public void drawCards()
     {
         for (int i = 0; i < 2; i++)
@@ -434,6 +443,9 @@ public class Game extends JPanel
         } 
     }
     
+    /**
+     * Draw the amount of chips the player owns
+     */
     public void drawChips()
     {
         labelChips = new JLabel("$" + Integer.toString(player.getChips()));
@@ -450,26 +462,33 @@ public class Game extends JPanel
         }
     }
     
+    /**
+     * Draws the value of the win and a new "background" image
+     */
     public void drawWin()
     {
         JLabel label = new JLabel("$" + Integer.toString(player.getBet()*2));
         label.setFont(new Font("Calibri",Font.BOLD , 42));
-        //label.setForeground(Color.white);
-        add(label);
         label.setBounds(130, 120, 250, 50);
+        add(label);
         
         JLabel image = new JLabel(new ImageIcon("src/resources/background_win.png"));
         image.setBounds(0, 0, background.getWidth(this), background.getHeight(this));
         add(image);
     }
     
+    /**
+     * Draws icon and text with the bets value
+     */
     public void drawBet()
     {
+        // Creates text label
         labelBetText = new JLabel("$" + Integer.toString(player.getBet()));
         labelBetText.setFont(new Font("Calibri",Font.BOLD , 18));
         labelBetText.setForeground(Color.white);
         add(labelBetText);
         
+        //Selects the chip icon that equals the value of the bet
         ImageIcon iicon;
         if      (player.getBet() - 5000 >= 0){iicon = new ImageIcon("src/resources/chip5000.png");}
         else if (player.getBet() - 1000 >= 0){iicon = new ImageIcon("src/resources/chip1000.png");}           
@@ -482,6 +501,7 @@ public class Game extends JPanel
         labelBetCoin=new JLabel(iicon);
         add(labelBetCoin);
         
+        //Sets postion depending on state
         if (state == 1)
         {
             labelBetText.setBounds(160, 370, 250, 50);
@@ -494,6 +514,9 @@ public class Game extends JPanel
         }
     }
 
+    /**
+     * Draws white box with the handvalue of the player
+     */
     public void drawPlayersHandValue()
     {
         labelHandValue = new JLabel(Integer.toString(player.getHandValue()));
@@ -507,6 +530,9 @@ public class Game extends JPanel
         box1.setBounds(150, 290, 50, 50);
     }
     
+    /**
+     * Draws white box with the handvalue of the dealer
+     */
     public void drawDealersHandValue()
     {
         labelDealersValue = new JLabel(Integer.toString(dealer.getHandValue()));

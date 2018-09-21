@@ -16,6 +16,6 @@ public class Automation extends JPanel implements ActionListener
     
     public void actionPerformed(ActionEvent e)
     {
-        game.gameloop(-1);
+        game.gamelogic(-1);
     }
 }
