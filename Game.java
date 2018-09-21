@@ -149,7 +149,6 @@ public class Game extends JPanel
                     if (player.deal() == 0)
                     {
                         dealer.deal();
-                        drawCards();
                         initComponents2();
                         state = 2;
                     }
@@ -435,6 +434,7 @@ public class Game extends JPanel
         dealer.flushHand();
         
         initComponents();
+        gameloop(-1);
     }
 
     public void drawCards()
@@ -511,10 +511,13 @@ public class Game extends JPanel
         add(labelBetText);
 
         ImageIcon iicon;
-        if (player.getBet() - 5000 >= 0){iicon =new ImageIcon("src/resources/chip5000.png");}
-        else if (player.getBet() - 500  >= 0){iicon = new ImageIcon("src/resources/chip500.png");}           
-        else if (player.getBet() - 100  >= 0){iicon = new ImageIcon("src/resources/chip100.png");}
-        else if (player.getBet() - 10   >= 0){iicon = new ImageIcon("src/resources/chip25.png");}
+        if      (player.getBet() - 5000 >= 0){iicon = new ImageIcon("src/resources/chip5000.png");}
+        else if (player.getBet() - 1000 >= 0){iicon = new ImageIcon("src/resources/chip1000.png");}           
+        else if (player.getBet() -  500 >= 0){iicon = new ImageIcon("src/resources/chip500.png");}
+        else if (player.getBet() -  100 >= 0){iicon = new ImageIcon("src/resources/chip100.png");}
+        else if (player.getBet() -   25 >= 0){iicon = new ImageIcon("src/resources/chip25.png");}           
+        else if (player.getBet() -    5 >= 0){iicon = new ImageIcon("src/resources/chip5.png");}
+        else if (player.getBet() -    1 >= 0){iicon = new ImageIcon("src/resources/chip1.png");}
         else {iicon = new ImageIcon("");}
         labelBetCoin=new JLabel(iicon);
         add(labelBetCoin);
@@ -565,9 +568,7 @@ public class Game extends JPanel
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-
         g.drawImage(background, 0, 0, null);
-
         Toolkit.getDefaultToolkit().sync();
     }
 }
