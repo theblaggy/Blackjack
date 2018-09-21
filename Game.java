@@ -8,15 +8,11 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 /**
-* Handles the whole Game:
-*  Draws the UI
-*  Calculates the game
-*  Manages mouse clicks
-*
-* @author Lucas & Filip
-* @version 18.09.2018
-*/
-
+ * Handles the whole Game:
+ * Draws the UI
+ * Calculates the game
+ * Manages mouse clicks
+ */
 public class Game extends JPanel
 {    
     private Dealer dealer = new Dealer();
@@ -497,8 +493,7 @@ public class Game extends JPanel
 
     public void drawDealersHandValue()
     {
-        if (player.getFinished()){labelDealersValue = new JLabel(Integer.toString(dealer.getHandValue()));}
-        else {labelDealersValue = new JLabel(Integer.toString(dealer.getFirstCardValue()));}
+        labelDealersValue = new JLabel(Integer.toString(dealer.getHandValue()));
         labelDealersValue.setFont(new Font("Calibri",Font.BOLD , 18));
         labelDealersValue.setForeground(Color.black);
         add(labelDealersValue);

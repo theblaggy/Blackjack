@@ -2,29 +2,34 @@ import java.util.Scanner;
 import java.io.*;
 
 /**
- * Write a description of class Player here.
- *
- * @author (your name)
- * @version (a version number or a date)
+ * Implements the Player
  */
 public class Player
 {
-    private Card[] hand = new Card[10];
-    private int handCards = 0;
+    protected Card[] hand = new Card[10];
+    protected int handCards = 0;
     
-    private boolean finished = false;
-    private boolean busted = false;
+    protected boolean finished = false;
+    protected boolean busted = false;
     
-    private int chips;
-    private int bet;
-    private Dealer dealer;
+    protected int chips;
+    protected int bet;
     
+    protected Dealer dealer;
+    
+    /**
+     * Sets dealer to get cards and read chips from file
+     */
     public Player(Dealer pDealer)
     {
         dealer = pDealer;
         readChips();
     }
     
+    /**
+     * Hits two cards if bet isn´t zero
+     * Returns 1 if bet is zero else 0
+     */
     public int deal()
     {
         if (bet == 0){return 1;}
@@ -34,18 +39,27 @@ public class Player
         return 0;
     }
     
+    /**
+     * Places all chips of the player
+     */
     public void allIn()
     {
         bet += chips;
         chips = 0;
     }
     
+    /**
+     * Sets bet to zero
+     */
     public void reset()
     {
         chips += bet;
         bet = 0;
     }
     
+    /**
+     * Bet the given amount of chips
+     */
     public void bet(int pBet)
     {
         if (pBet > chips){return;}
@@ -54,6 +68,10 @@ public class Player
         bet += pBet;
     }
     
+    /**
+     * Draws a card and sets Ace to 1 if needed
+     * Checks if player has busted
+     */
     public void hit()
     {
         hand[handCards] = dealer.getCard();
@@ -83,11 +101,17 @@ public class Player
         }
     }
     
+    /**
+     * Sets finished to true
+     */
     public void stand()
     {
         finished = true;
     }
     
+    /**
+     * Double the bet if possible and get one last card
+     */
     public int doubble()
     {
         if (bet > chips) {return 1;}
@@ -99,6 +123,9 @@ public class Player
         return 0;
     }
     
+    /**
+     * Resets all hand associated attributes
+     */
     public void flushHand()
     {
         hand = new Card[10];
@@ -108,26 +135,41 @@ public class Player
         bet = 0;
     }
     
+    /**
+     * Returns player hand
+     */
     public Card[] getHand()
     {
         return hand;
     }
     
+    /**
+     * Returns chips
+     */
     public int getChips()
     {
         return chips;
     }
     
-    public void setChips(int pChips)
+    /**
+     * Adds chips to player chips
+     */
+    public void setChips(int chips)
     {
-        chips += pChips;
+        this.chips += chips;
     }
     
+    /**
+     * Returns placed bet
+     */
     public int getBet()
     {
         return bet;
     }
     
+    /**
+     * Returns value of all hand cards
+     */
     public int getHandValue()
     {
         int value = 0;
@@ -138,16 +180,25 @@ public class Player
         return value;
     }
     
+    /**
+     * Returns finished
+     */
     public boolean getFinished()
     {
         return finished;
     }
     
+    /**
+     * Returns busted
+     */
     public boolean getBusted()
     {
         return busted;
     }
     
+    /**
+     * Writes Chips to file
+     */
     public void writeChips()
     {
         // The name of the file to open.
@@ -176,6 +227,9 @@ public class Player
         }
     }
     
+    /**
+     * Reads chips from file
+     */
     public void readChips()
     {
         // The name of the file to open.

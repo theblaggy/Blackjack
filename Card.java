@@ -7,10 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 /**
- * Write a description of class Card here.
- *
- * @author Lucas & Filip
- * @version 18.09.
+ * Implements a playing card with suit and rank
+ * rank and suite are handled iternaly as integers
  */
 public class Card 
 {
@@ -19,6 +17,9 @@ public class Card
     private ImageIcon icon;
     private boolean flag_lower = false;
     
+    /**
+     * Sets suite, rank and icon
+     */
     public Card(int pSuite, int pRank)
     {
         suite = pSuite;
@@ -26,6 +27,9 @@ public class Card
         icon = new ImageIcon(new ImageIcon("src/resources/Playing_card_" + getSuite() + "_" + getRank() + ".png").getImage().getScaledInstance(120, 180, Image.SCALE_SMOOTH));
     }
     
+    /**
+     * Returns suite
+     */
     public String getSuite()
     {
         switch(suite) {
@@ -41,6 +45,9 @@ public class Card
         return "";
     }
     
+    /**
+     * Returns rank
+     */
     public String getRank()
     {
         switch(rank) {
@@ -74,6 +81,9 @@ public class Card
         return "";
     }
     
+    /**
+     * Returns rank as integer
+     */
     public int getNumber()
     {
         if (rank > 10)
@@ -87,11 +97,17 @@ public class Card
         return rank;
     }
     
+    /**
+     * Returns icon
+     */
     public ImageIcon getIcon()
     {
         return icon;
     }
     
+    /**
+     * Sets Ace from 11 to 1
+     */
     public void setLower()
     {
         flag_lower = true;

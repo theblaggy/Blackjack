@@ -1,27 +1,28 @@
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Write a description of class Dealer here.
- *
- * @author (your name)
- * @version (a version number or a date)
+ * Dealer extends from Player and also creates the playing card deck
  */
-public class Dealer
+public class Dealer extends Player
 {
-    private Card[] hand = new Card[10];
-    private int handCards = 0;
-    
-    private boolean finished = false;
-    private boolean busted = false;
-    
     private Card[] cards = new Card[208];
     private int cardsNumber = 208;
     
+    /**
+     * Sets chips and bet to -1 because the dealer has endless chips and won´t place a bet
+     */
     public Dealer()
     {
+        super(null);
         
+        chips = -1;
+        bet = -1;
+        dealer = this;
     }
     
+    /**
+     * Dealer draws on 16 stands on all 17 
+     */
     public void turn()
     {
         int handValue = getHandValue();
@@ -40,51 +41,28 @@ public class Dealer
         }
     }
     
-    public void deal()
+    /**
+     * Overwritten to set bet to -1, so the dealer doesn´t have to place a bet
+     */
+    @Override
+    public void flushHand()
     {
-        hit();
+        super.flushHand();
+        bet = -1;
     }
     
-    public void hit()
-    {
-        hand[handCards] = getCard();
-        handCards++;
-        
-        if (getHandValue() > 21)
-        {
-            for (int i = 0; i < handCards; i++)
-            {
-                if (hand[i].getNumber() == 11)
-                {
-                    hand[i].setLower();
-                    if (getHandValue() < 21)
-                    {
-                        break;
-                    }
-                }
-            }
-        }
-        if (getHandValue() >= 21)
-        {
-            if (getHandValue() > 21)
-            {
-                busted = true;
-            }
-            stand();
-        }
-    }
-    
-    public void stand()
-    {
-        finished = true;
-    }
-    
+    /**
+     * Returns a card from the stack
+     */
     public Card getCard()
     {
         cardsNumber--;
         return cards[cardsNumber];
     }
     
+    /**
+     * Creates 4 decks á 52 cards
+     */
     public void createCards()
     {
         // Blackjack is played with 4 Decks
@@ -105,43 +83,5 @@ public class Dealer
             cards[i] = cards[rndm];
             cards[rndm] = tmp;
         }
-    }
-    
-    public void flushHand()
-    {
-        hand = new Card[10];
-        handCards = 0;
-        finished = false;
-        busted = false;
-    }
-    
-    public Card[] getHand()
-    {
-        return hand;
-    }
-    
-    public int getHandValue()
-    {
-        int value = 0;
-        for (int i = 0; i < handCards; i++)
-        {
-            value += hand[i].getNumber();
-        }
-        return value;
-    }
-
-    public int getFirstCardValue()
-    {
-        return hand[0].getNumber();
-    }
-    
-    public boolean getFinished()
-    {
-        return finished;
-    }
-    
-    public boolean getBusted()
-    {
-        return busted;
     }
 }

@@ -1,14 +1,9 @@
-aierzlniti inentmpo/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+
 /**
- *
- * @author Lucas & Filip
+ * Form for the main menu of the game
  */
 public class Menu extends javax.swing.JPanel
 {
@@ -16,7 +11,7 @@ public class Menu extends javax.swing.JPanel
     private Application parent;
     
     /**
-     * Sets parent and window size and calls the co
+     * Sets parent and window size and calls the components initializer
      */
     public Menu(Application application) {
         this.parent = application;
