@@ -43,7 +43,6 @@ public class Dealer
     public void deal()
     {
         hit();
-        hit();
     }
     
     public void hit()

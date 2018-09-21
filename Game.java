@@ -26,10 +26,16 @@ public class Game extends JPanel
     int chipWidth=87;
     int buttonHeight=78;
     int buttonWidth=78;
+    
     private JLabel labelChips;
     private JLabel labelBetCoin;
     private JLabel labelBetText;
-
+    private JLabel labelHandValue;
+    private JLabel labelDealersValue;
+    private JLabel box1;
+    private JLabel box2;
+    private JLabel[] labelCards = new JLabel[20];
+    
     private int state = 1; // 1 = Bet; 2 = Players Turn; 3 = Win; 4 = Dealers Turn
 
     private Image background;
@@ -102,7 +108,15 @@ public class Game extends JPanel
         JButton button4;
         JLabel lChipBar;
         JLabel bet;
+        JLabel littleChip;
+        
+        removeAll();
 
+        littleChip= new JLabel();
+        littleChip.setBounds(15,533,25,25);
+        littleChip.setIcon(new ImageIcon("src/resources/littleChip.png"));
+        add(littleChip);
+        
         buttonReset=buttonCreator(30, 380, "button_Reset.png", true);
         buttonReset.setBorderPainted(false);
         buttonReset.addActionListener(new ActionListener() {
@@ -112,7 +126,7 @@ public class Game extends JPanel
                 }
             });
         reset= new JLabel("Reset");
-        reset.setBounds(52,450, 100, 30);
+        reset.setBounds(50,450, 100, 30);
         reset.setForeground(new Color(255,255,255));
         add(reset);
             
@@ -123,10 +137,10 @@ public class Game extends JPanel
                     gameloop(-1);
                 }
             });
-        /*allIn= new JLabel("All In");
+        allIn= new JLabel("All In");
         allIn.setBounds(167,515, 100, 30);
         allIn.setForeground(new Color(255,255,255));
-        add(allIn);*/
+        add(allIn);
         
         buttonDeal=buttonCreator(265,375,"button_deal.png", true);
         buttonDeal.addActionListener(new ActionListener() {
@@ -134,7 +148,6 @@ public class Game extends JPanel
 
                     if (player.deal() == 0)
                     {
-                        removeAll();
                         dealer.deal();
                         drawCards();
                         initComponents2();
@@ -143,10 +156,10 @@ public class Game extends JPanel
                     gameloop(-1);
                 }
             });
-        /*deal= new JLabel("Deal");
-        deal.setBounds(287,450, 100, 30);
+        deal= new JLabel("Deal");
+        deal.setBounds(290,450, 100, 30);
         deal.setForeground(new Color(255,255,255));
-        add(deal);*/
+        add(deal);
         
         int i=0;
         if(player.getChips()>=5000 && i<4){
@@ -244,6 +257,8 @@ public class Game extends JPanel
         JPanel cards;
         JLabel littleChip;
         
+        removeAll();
+        
         littleChip= new JLabel();
         littleChip.setBounds(15,628,25,25);
         littleChip.setIcon(new ImageIcon("src/resources/littleChip.png"));
@@ -253,10 +268,11 @@ public class Game extends JPanel
         buttonHit.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     player.hit();
+                    gameloop(-1);
                 }
             });
         hit= new JLabel("Hit");
-        hit.setBounds(45,540, 100, 30);
+        hit.setBounds(44,540, 100, 30);
         hit.setForeground(new Color(255,255,255));
         add(hit);
 
@@ -264,6 +280,7 @@ public class Game extends JPanel
         buttonStand.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     player.stand();
+                    gameloop(-1);
                 }
             });
         stand= new JLabel("Stand");
@@ -275,10 +292,11 @@ public class Game extends JPanel
         buttonDouble.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     player.doubble();
+                    gameloop(-1);
                 }
             });
         doubble= new JLabel("Double");
-        doubble.setBounds(295,540, 100, 30);
+        doubble.setBounds(292,540, 100, 30);
         doubble.setForeground(new Color(255,255,255));
         add(doubble);
             
@@ -287,9 +305,18 @@ public class Game extends JPanel
     public void gameloop(int element)
     {
         try{//updated non-static Elements
-            remove(labelChips);
-            remove(labelBetCoin);
-            remove(labelBetText);
+            if (labelChips != null)         remove(labelChips);
+            if (labelBetCoin != null)       remove(labelBetCoin);
+            if (labelBetText != null)       remove(labelBetText);
+            if (labelHandValue != null)     remove(labelHandValue);
+            if (labelDealersValue != null)  remove(labelDealersValue);
+            if (box1 != null)               remove(box1);
+            if (box2 != null)               remove(box2);
+            
+            for (int i = 0; i < labelCards.length; i++)
+            {
+                if (labelCards[i] != null) remove(labelCards[i]);
+            }
         } catch(Exception e){//if a label hasn´t been added
         }
         if (state == 3)
@@ -406,6 +433,8 @@ public class Game extends JPanel
 
         player.flushHand();
         dealer.flushHand();
+        
+        initComponents();
     }
 
     public void drawCards()
@@ -436,14 +465,14 @@ public class Game extends JPanel
             {
                 if (hand[j] != null)
                 {
-                    JLabel icon = new JLabel(hand[j].getIcon());
-                    add(icon);
+                    labelCards[j + i*10] = new JLabel(hand[j].getIcon());
+                    add(labelCards[j + i*10]);
                     int x = 190 - (60 + c2 * 30) + (((c1 - 1) / 2) * 30);
                     int y;
                     c2++;
                     if (i == 0){y = 340;}
                     else {y = 100;}
-                    icon.setBounds(x, y, 120, 180);
+                    labelCards[j + i*10].setBounds(x, y, 120, 180);
                 }
             }
         } 
@@ -457,7 +486,7 @@ public class Game extends JPanel
         add(labelChips);
         if (state == 1)
         {
-            labelChips.setBounds(45, 520, 250, 50);
+            labelChips.setBounds(40, 520, 250, 50);
         }
         if (state == 2 || state == 3 || state == 4)
         {
@@ -492,40 +521,43 @@ public class Game extends JPanel
 
         if (state == 1)
         {
-            labelBetText.setBounds(160, 425, 250, 50);
-            labelBetCoin.setBounds(148, 350, iicon.getIconWidth(), iicon.getIconHeight());
+            labelBetText.setBounds(160, 370, 250, 50);
+            labelBetCoin.setBounds(148, 300, iicon.getIconWidth(), iicon.getIconHeight());
         }
         if (state == 2 || state == 4)
         {
             labelBetText.setBounds(20, 230, 250, 50);
-            labelBetCoin.setBounds(8, 152, 78, 78);
+            labelBetCoin.setBounds(8, 160, 78, 78);
         }
     }
 
     public void drawPlayersHandValue()
     {
-        JLabel label = new JLabel(Integer.toString(player.getHandValue()));
-        label.setIcon(new ImageIcon("src/resources/box.png"));
-        label.setFont(new Font("Calibri",Font.BOLD , 16));
-        label.setForeground(Color.black);
-        add(label);
-        label.setBounds(158, 289, 50, 50);
+        labelHandValue = new JLabel(Integer.toString(player.getHandValue()));
+        labelHandValue.setFont(new Font("Calibri",Font.BOLD , 16));
+        labelHandValue.setForeground(Color.black);
+        add(labelHandValue);
+        labelHandValue.setBounds(165, 290, 50, 50);
+        
+        box1 = new JLabel(new ImageIcon("src/resources/box.png"));
+        add(box1);
+        box1.setBounds(150, 290, 50, 50);
     }
 
     public void drawDealersHandValue()
     {
-        JLabel label;
-        JLabel box1; 
-        label= new JLabel();
-        label.setIcon(new ImageIcon("src/resources/box.png"));
-        label.setFont(new Font("Calibri",Font.BOLD , 18));
-        label.setForeground(Color.black);
-        if (player.getFinished()){label = new JLabel(Integer.toString(dealer.getHandValue()));}
-        else {label.setText(Integer.toString(dealer.getFirstCardValue()));}
-        add(label);
-        label.setBounds(158, 30, 40, 30);
+        if (player.getFinished()){labelDealersValue = new JLabel(Integer.toString(dealer.getHandValue()));}
+        else {labelDealersValue = new JLabel(Integer.toString(dealer.getFirstCardValue()));}
+        labelDealersValue.setFont(new Font("Calibri",Font.BOLD , 18));
+        labelDealersValue.setForeground(Color.black);
+        add(labelDealersValue);
+        labelDealersValue.setBounds(165, 30, 50, 50);
+        
+        box2 = new JLabel(new ImageIcon("src/resources/box.png"));
+        add(box2);
+        box2.setBounds(150, 30, 50, 50);
     }
-
+    
     /**
      * Overwritten to draw the background pictures
      */
