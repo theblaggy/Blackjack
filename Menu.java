@@ -32,7 +32,7 @@ public class Menu extends javax.swing.JPanel
     private void initComponents()
     {
         // Creates start button
-        JButton buttonStart=new JButton("Start");
+        JButton buttonStart = new JButton("Start");
         buttonStart.setBounds(120,400,130,50);
         buttonStart.setFocusPainted(false);
         buttonStart.setForeground(Color.WHITE);
@@ -50,8 +50,8 @@ public class Menu extends javax.swing.JPanel
         );
         
         // Creates info label
-        JLabel labelStart = new JLabel("press start to continue");
-        labelStart.setBounds(120,430,130,50);
+        JLabel labelStart = new JLabel("Press Start to Continue");
+        labelStart.setBounds(115,430,150,50);
         add(labelStart);
         
         // Creates the logo
