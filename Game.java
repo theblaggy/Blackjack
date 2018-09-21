@@ -8,24 +8,19 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 /**
- * Handles the whole Game:
- *  Draws the UI
- *  Calculates the game
- *  Manages mouse clicks
- *
- * @author Lucas & Filip
- * @version 18.09.2018
- */
+* Handles the whole Game:
+*  Draws the UI
+*  Calculates the game
+*  Manages mouse clicks
+*
+* @author Lucas & Filip
+* @version 18.09.2018
+*/
 
 public class Game extends JPanel
 {    
     private Dealer dealer = new Dealer();
     private Player player = new Player(dealer);
-
-    int chipHeight=87;
-    int chipWidth=87;
-    int buttonHeight=78;
-    int buttonWidth=78;
     
     private JLabel labelChips;
     private JLabel labelBetCoin;
@@ -37,54 +32,42 @@ public class Game extends JPanel
     private JLabel[] labelCards = new JLabel[20];
     
     private int state = 1; // 1 = Bet; 2 = Players Turn; 3 = Win; 4 = Dealers Turn
-
+    
     private Image background;
-
+    
     public Game()
-    {   
-        dealer.createCards();
-        game();
-
-        initComponents();
-    }
-
-    /**
-     * Implements a mouse handling method
-     */
-    private void game()
     {
-
         ImageIcon iiBackground = new ImageIcon("src/resources/background.png");
         background = iiBackground.getImage();
-
+    
         int w = background.getWidth(this);
         int h = background.getHeight(this);
         setPreferredSize(new Dimension(w, h));
         setLayout(null);
-
-        drawChips();
-        if (player.getBet() != 0)
-        {
-            drawBet();
-        }
-
+    
+        dealer.createCards();
         add(new Automation(this));
+        initComponents();
     }
-
-    private JButton buttonCreator(int x, int y, String src, boolean isButton){
-        int h;
-        int w;
-        if(isButton){
-            h=buttonHeight;
-            w=buttonWidth;
-        } else{
-            h=chipHeight;
-            w=chipWidth; 
+    
+    private JButton buttonCreator(int x, int y, String src, boolean isButton)
+    {
+        int height;
+        int width;
+        
+        if(isButton)
+        {
+            height = 78;
+            width  = 78;
         }
-        JButton button=new JButton();
-        button.setBounds(x, y, w, h);
-        ImageIcon iicon = new ImageIcon(new ImageIcon("src/resources/" + src).getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH));
-        button.setIcon(iicon);
+        else
+        {
+            height = 87;
+            width  = 87;
+        }
+        
+        JButton button=new JButton(new ImageIcon(new ImageIcon("src/resources/" + src).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+        button.setBounds(x, y, width, height);
         button.setVisible(true);
         button.setOpaque(false);
         button.setContentAreaFilled(false);
@@ -92,154 +75,119 @@ public class Game extends JPanel
         add(button);
         return button;
     }
-
-    private void initComponents(){
-        int chipValue[]=new int[4];
-        String chipIcon[]=new String[4];
-        JButton buttonReset;
-        JButton buttonAllIn;
-        JButton buttonDeal;
-        JLabel reset;
-        JLabel allIn;
-        JLabel deal;
-        JButton button1;
-        JButton button2;
-        JButton button3;
-        JButton button4;
-        JLabel lChipBar;
-        JLabel bet;
-        JLabel littleChip;
-        
+    
+    /**
+     * Creates all static components of the first screen (where the player places his bet)
+     */
+    private void initComponents()
+    {
         removeAll();
-
-        littleChip= new JLabel();
+        
+        // Creates the little icon next to the players chips label
+        JLabel littleChip= new JLabel(new ImageIcon("src/resources/littleChip.png"));
         littleChip.setBounds(15,533,25,25);
-        littleChip.setIcon(new ImageIcon("src/resources/littleChip.png"));
         add(littleChip);
         
-        buttonReset=buttonCreator(30, 380, "button_Reset.png", true);
+        // Creates the reset button
+        JButton buttonReset = buttonCreator(30, 380, "button_Reset.png", true);
         buttonReset.setBorderPainted(false);
-        buttonReset.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    player.reset();
-                    gameloop(-1);
-                }
-            });
-        reset= new JLabel("Reset");
-        reset.setBounds(50,450, 100, 30);
-        reset.setForeground(new Color(255,255,255));
-        add(reset);
-            
-        buttonAllIn=buttonCreator(145,440, "button_all_in.png", true);
-        buttonAllIn.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    player.allIn();
-                    gameloop(-1);
-                }
-            });
-        allIn= new JLabel("All In");
-        allIn.setBounds(167,515, 100, 30);
-        allIn.setForeground(new Color(255,255,255));
-        add(allIn);
+        buttonReset.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent evt)
+            {
+                player.reset();
+                gameloop(-1);
+            }
+        }
+        );
         
-        buttonDeal=buttonCreator(265,375,"button_deal.png", true);
-        buttonDeal.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-
-                    if (player.deal() == 0)
-                    {
-                        dealer.deal();
-                        initComponents2();
-                        state = 2;
-                    }
-                    gameloop(-1);
-                }
-            });
-        deal= new JLabel("Deal");
-        deal.setBounds(290,450, 100, 30);
-        deal.setForeground(new Color(255,255,255));
-        add(deal);
+        // Creates a text label for reset button
+        JLabel labelReset= new JLabel("Reset");
+        labelReset.setBounds(50,450, 100, 30);
+        labelReset.setForeground(new Color(255,255,255));
+        add(labelReset);
         
-        int i=0;
-        if(player.getChips()>=5000 && i<4){
-            chipValue[i]=5000;
-            chipIcon[i]= "chip5000.png";
-            i++;
+        // Creates the all-in button
+        JButton buttonAllIn = buttonCreator(145,440, "button_all_in.png", true);
+        buttonAllIn.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent evt)
+            {
+                player.allIn();
+                gameloop(-1);
+            }
         }
-        if(player.getChips()>=1000 && i<4){
-            chipValue[i]=1000;
-            chipIcon[i]= "chip1000.png";
-            i++;
+        );
+        
+        // Creates a text label for all-in button
+        JLabel labelAllIn= new JLabel("All In");
+        labelAllIn.setBounds(167,515, 100, 30);
+        labelAllIn.setForeground(new Color(255,255,255));
+        add(labelAllIn);
+        
+        // Creates the deal button
+        JButton buttonDeal=buttonCreator(265,375,"button_deal.png", true);
+        buttonDeal.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent evt)
+            {
+                if (player.deal() == 0)
+                {
+                    dealer.deal();
+                    initComponents2();
+                    state = 2;
+                }
+                gameloop(-1);
+            }
         }
-        if(player.getChips()>=500 && i<4){
-            chipValue[i]=500;
-            chipIcon[i]= "chip500.png";
-            i++;
+        );
+        
+        // Creates a text label for deal button
+        JLabel labelDeal= new JLabel("Deal");
+        labelDeal.setBounds(290,450, 100, 30);
+        labelDeal.setForeground(new Color(255,255,255));
+        add(labelDeal);
+        
+        int chipValues[] = {5000, 1000, 500, 100, 25, 5, 1};
+        int counter = 0;
+        
+        // Compares the amount of chips of the the user with the predefined chip, to draw only the ones the player can use
+        for (int i = 0; i < chipValues.length; i++)
+        {
+            if (player.getChips() > chipValues[i])
+            {
+                counter = i;
+                break;
+            }
         }
-        if(player.getChips()>=100 && i<4){
-            chipValue[i]=100;
-            chipIcon[i]= "chip100.png";
-            i++;
-        }
-        if(player.getChips()>=25 && i<4){
-            chipValue[i]=25;
-            chipIcon[i]= "chip25.png";
-            i++;
-        }
-        if(player.getChips()>=5 && i<4){
-            chipValue[i]=5;
-            chipIcon[i]= "chip5.png";
-            i++;
-        }
-        if(player.getChips()>=1 && i<4){
-            chipValue[i]=1;
-            chipIcon[i]= "chip1.png";
-            i++;
-        }
-        int chipX=17;
-        int xPadding=85;
+        int firstChip = counter; // The variable that defines the first chip to use has to be (effectively) final to be referenced later from an inner class
+        
+        int chipX=21;
         int chipY=565;
-        button1=buttonCreator(chipX,chipY,chipIcon[0], false);
-        button1.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    player.bet(chipValue[0]);
+        int xPadding=85;
+        
+        // Creates the 4 chip buttons at the bottom of the screen
+        for (int i = 0; i < 4; i++)
+        {
+            int offset = i; // The variable to add the offset to the first chip has to be (effectively) final to be referenced later from an inner class
+            JButton buttonChip = buttonCreator(chipX + (offset*xPadding), chipY, "chip" + Integer.toString(chipValues[firstChip+offset]) + ".png", false);
+            buttonChip.addActionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent evt)
+                {
+                    player.bet(chipValues[firstChip+offset]);
                     gameloop(-1);
                 }
-            });
-
-        button2=buttonCreator(chipX+xPadding-1,chipY,chipIcon[1], false);
-        button2.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    player.bet(chipValue[1]);
-                    gameloop(-1);
-                }
-            });
-
-        button3=buttonCreator(chipX+(2*xPadding),chipY,chipIcon[2], false);
-        button3.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    player.bet(chipValue[2]);
-                    gameloop(-1);
-                }
-            });
-
-        button4=buttonCreator(chipX+(3*xPadding),chipY,chipIcon[3], false);
-        button4.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    player.bet(chipValue[3]);
-                    gameloop(-1);
-                }
-            });
-
-        lChipBar= new JLabel();
-        lChipBar.setBounds(5,561,375,105);
-        ImageIcon iiChipBar = new ImageIcon("src/resources/chipBar.png");
-
-        lChipBar.setIcon(iiChipBar);
-        add(lChipBar);
-
+            }
+            );
+        }
+        
+        // Creates a label for the chipbar
+        JLabel labelChipBar= new JLabel(new ImageIcon("src/resources/chipBar.png"));
+        labelChipBar.setBounds(5,561,375,105);
+        add(labelChipBar);
     }
-
+    
     public void initComponents2(){
         Image white;
         Image iDouble;
@@ -255,14 +203,14 @@ public class Game extends JPanel
         JPanel cardMenu;
         JPanel cards;
         JLabel littleChip;
-        
+
         removeAll();
-        
+
         littleChip= new JLabel();
         littleChip.setBounds(15,628,25,25);
         littleChip.setIcon(new ImageIcon("src/resources/littleChip.png"));
         add(littleChip);
-        
+
         buttonHit=buttonCreator(15, 465, "button_hit.png", true);
         buttonHit.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
@@ -298,7 +246,7 @@ public class Game extends JPanel
         doubble.setBounds(292,540, 100, 30);
         doubble.setForeground(new Color(255,255,255));
         add(doubble);
-            
+
     }
 
     public void gameloop(int element)
@@ -311,7 +259,7 @@ public class Game extends JPanel
             if (labelDealersValue != null)  remove(labelDealersValue);
             if (box1 != null)               remove(box1);
             if (box2 != null)               remove(box2);
-            
+
             for (int i = 0; i < labelCards.length; i++)
             {
                 if (labelCards[i] != null) remove(labelCards[i]);
@@ -432,7 +380,7 @@ public class Game extends JPanel
 
         player.flushHand();
         dealer.flushHand();
-        
+
         initComponents();
         gameloop(-1);
     }
@@ -541,7 +489,7 @@ public class Game extends JPanel
         labelHandValue.setForeground(Color.black);
         add(labelHandValue);
         labelHandValue.setBounds(165, 290, 50, 50);
-        
+
         box1 = new JLabel(new ImageIcon("src/resources/box.png"));
         add(box1);
         box1.setBounds(150, 290, 50, 50);
@@ -555,12 +503,12 @@ public class Game extends JPanel
         labelDealersValue.setForeground(Color.black);
         add(labelDealersValue);
         labelDealersValue.setBounds(165, 30, 50, 50);
-        
+
         box2 = new JLabel(new ImageIcon("src/resources/box.png"));
         add(box2);
         box2.setBounds(150, 30, 50, 50);
     }
-    
+
     /**
      * Overwritten to draw the background pictures
      */
