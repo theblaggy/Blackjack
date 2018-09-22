@@ -51,7 +51,7 @@ public class Menu extends javax.swing.JPanel
         
         // Creates info label
         JLabel labelStart = new JLabel("Press Start to Continue");
-        labelStart.setBounds(115,430,150,50);
+        labelStart.setBounds(119,430,150,50);
         add(labelStart);
         
         // Creates the logo
