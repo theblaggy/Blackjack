@@ -20,9 +20,9 @@ public class Player
     /**
      * Sets dealer to get cards and read chips from file
      */
-    public Player(Dealer pDealer)
+    public Player(Dealer dealer)
     {
-        dealer = pDealer;
+        this.dealer = dealer;
         readChips();
     }
     

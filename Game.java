@@ -266,7 +266,7 @@ public class Game extends JPanel
     }
     
     /**
-     * Calculates what to draw and what to do
+     * Handles order of events
      */
     public void gamelogic()
     {

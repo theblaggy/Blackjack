@@ -43,21 +43,4 @@ public class Application extends JFrame
         pack();
         setLocationRelativeTo(null);
     }
-    
-    /**
-     * main method to execute from terminal
-     */
-    public static void main(String[] args)
-    {
-        EventQueue.invokeLater(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                Application app = new Application();
-                app.setVisible(true);
-            }
-        }
-        );
-    }
 }

@@ -15,7 +15,7 @@ public class Card
     private int suite; 
     private int rank;
     private ImageIcon icon;
-    private boolean flag_lower = false;
+    private boolean flagLower = false;
     
     /**
      * Sets suite, rank and icon
@@ -90,7 +90,7 @@ public class Card
         {
             return 10;
         }
-        if (rank == 1 && !flag_lower)
+        if (rank == 1 && !flagLower)
         {
             return 11;
         }
@@ -110,6 +110,6 @@ public class Card
      */
     public void setLower()
     {
-        flag_lower = true;
+        flagLower = true;
     }
 }

@@ -7,7 +7,7 @@ import javax.swing.*;
  */
 public class Automation extends JPanel implements ActionListener
 {
-    Game game;
+    private Game game;
     public Automation(Game game)
     {
         this.game = game;
