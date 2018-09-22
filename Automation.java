@@ -16,6 +16,7 @@ public class Automation extends JPanel implements ActionListener
     
     public void actionPerformed(ActionEvent e)
     {
-        game.gamelogic(-1);
+        game.gamelogic();
+        game.redrawUI();
     }
 }

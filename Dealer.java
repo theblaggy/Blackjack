@@ -30,7 +30,7 @@ public class Dealer extends Player
         if (handValue < 17)
         {
             hit();
-            if (handValue < 17)
+            if (handValue > 17)
             {
                 stand();
             }
@@ -39,6 +39,15 @@ public class Dealer extends Player
         {
             stand();
         }
+    }
+    
+    /**
+     * Dealer draws only one card
+     */
+    public int deal()
+    {
+        hit();
+        return 0;
     }
     
     /**
