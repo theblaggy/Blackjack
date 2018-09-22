@@ -193,6 +193,9 @@ public class Game extends JPanel
         add(labelChipBar);
     }
     
+    /**
+     * Creates components needed for the second screen (where the player actually plays)
+     */
     public void initComponents2()
     {
         // Removes all (static) components
@@ -262,6 +265,9 @@ public class Game extends JPanel
         add(labelDouble);
     }
     
+    /**
+     * Calculates what to draw and what to do
+     */
     public void gamelogic()
     {
         if (player.getFinished())
@@ -337,6 +343,9 @@ public class Game extends JPanel
         dealer.flushHand();
     }
     
+    /**
+     * Removes old components and draws new ones
+     */
     public void redrawUI()
     {
         // Removes dynamic components
