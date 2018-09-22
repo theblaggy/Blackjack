@@ -2,6 +2,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Dealer extends from Player and also creates the playing card deck
+ * 
+ * @author Lucas
  */
 public class Dealer extends Player
 {

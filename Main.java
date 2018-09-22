@@ -2,6 +2,8 @@ import java.awt.EventQueue;
 
 /**
  * It creates only a new Thread and executes Application
+ * 
+ * @author Lucas
  */
 public class Main
 {

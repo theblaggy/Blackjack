@@ -5,6 +5,8 @@ import java.awt.CardLayout;
 
 /**
  * Creates JFrame and adds Menu & Game
+ * 
+ * @author Lucas
  */
 public class Application extends JFrame
 {

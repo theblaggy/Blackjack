@@ -4,6 +4,8 @@ import javax.swing.*;
 
 /**
  * Automation is a support class to refresh the panel Game automatically
+ * 
+ * @author Lucas
  */
 public class Automation extends JPanel implements ActionListener
 {

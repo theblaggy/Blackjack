@@ -11,6 +11,8 @@ import javax.swing.JLabel;
  * Draws the UI
  * Calculates the game
  * Manages mouse clicks
+ * 
+ * @author Lucas & Filip
  */
 public class Game extends JPanel
 {    

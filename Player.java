@@ -3,6 +3,8 @@ import java.io.*;
 
 /**
  * Implements the Player
+ * 
+ * @author Lucas
  */
 public class Player
 {

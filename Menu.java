@@ -4,6 +4,8 @@ import java.awt.event.*;
 
 /**
  * Form for the main menu of the game
+ * 
+ * @author Filip
  */
 public class Menu extends javax.swing.JPanel
 {

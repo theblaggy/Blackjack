@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 /**
  * Implements a playing card with suit and rank
  * rank and suite are handled iternaly as integers
+ * 
+ * @author Lucas
  */
 public class Card 
 {
