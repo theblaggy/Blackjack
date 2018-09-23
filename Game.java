@@ -419,7 +419,7 @@ public class Game extends JPanel
                     int y;
                     c2++;
                     if (i == 0){y = 340;}
-                    else {y = 100;}
+                    else       {y = 100;}
                     labelCards[j + i*10].setBounds(x, y, 120, 180);
                 }
             }

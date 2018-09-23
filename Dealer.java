@@ -8,7 +8,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Dealer extends Player
 {
     private Card[] cards = new Card[208];
-    private int cardsNumber = 208;
+    private int cardsNumber;
     
     /**
      * Sets chips and bet to -1 because the dealer has endless chips and won´t place a bet
@@ -67,6 +67,10 @@ public class Dealer extends Player
      */
     public Card getCard()
     {
+        if (cardsNumber == 0)
+        {
+            createCards();
+        }
         cardsNumber--;
         return cards[cardsNumber];
     }
@@ -80,7 +84,7 @@ public class Dealer extends Player
         for (int i = 0; i < 4; i++) {
             // Create the 4 Suites
             for (int j = 0; j < 4; j++) {
-                // Create The 13 Ranks
+                // Create the 13 Ranks
                 for (int k = 0; k < 13; k++) {
                     cards[i*52 + j*13 + k*1] = new Card(j+1, k+1);
                 }
@@ -94,5 +98,7 @@ public class Dealer extends Player
             cards[i] = cards[rndm];
             cards[rndm] = tmp;
         }
+        
+        cardsNumber = 208;
     }
 }
